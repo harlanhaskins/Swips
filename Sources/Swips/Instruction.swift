@@ -7,6 +7,7 @@ enum Instruction {
     case lw(destination: Register, offset: Int, addr: Register)
     case lb(destination: Register, offset: Int, addr: Register)
     case li(Register, Int)
+    case la(Register, DataDeclaration)
     case sw(source: Register, offset: Int, addr: Register)
     case sb(source: Register, offset: Int, addr: Register)
     case rtype(String, Register, Register, Register, signed: Bool)
@@ -92,46 +93,5 @@ enum Instruction {
     
     static func sltiu(_ d: Register, _ s: Register, _ t: Int) -> Instruction {
         return .itype("slt", d, s, t, signed: false)
-    }
-    
-    var assembly: String {
-        switch self {
-        case .lw(let destination, let offset, let addr):
-            return "lw\t\t\(destination), \(offset)(\(addr))"
-        case .lb(let destination, let offset, let addr):
-            return "lb\t\t\(destination), \(offset)(\(addr))"
-        case .li(let reg, let imm):
-            return "li\t\t\(reg), \(imm)"
-        case .sw(let source, let offset, let addr):
-            return "sw\t\t\(source), \(offset)(\(addr))"
-        case .sb(let source, let offset, let addr):
-            return "sb\t\t\(source), \(offset)(\(addr))"
-        case .rtype(let name, let dst, let r1, let r2, let signed):
-            let suffix = signed ? "" : "u"
-            return "\(name)\(suffix)\t\t\(dst), \(r1), \(r2)"
-        case .itype(let name, let dst, let r, let imm, let signed):
-            let suffix = signed ? "" : "u"
-            return "\(name)i\(suffix)\t\t\(dst), \(r), \(imm)"
-        case .j(let block):
-            return "j\t\t\(block.label)"
-        case .jal(let block):
-            return "jal\t\t\(block.label)"
-        case .br(let cmp, let s, let t, let target):
-            return "b\(cmp.rawValue)\t\t\(s), \(t), \(target.label)"
-        case .jr(let reg):
-            return "jr\t\t\(reg)"
-        case .mult(let s, let t):
-            return "mult\t\t\(s), \(t)"
-        case .multu(let s, let t):
-            return "multu\t\t\(s), \(t)"
-        case .mfhi(let reg):
-            return "mfhi\t\t\(reg)"
-        case .mflo(let reg):
-            return "mflo\t\t\(reg)"
-        case .noop:
-            return "noop"
-        case .syscall:
-            return "syscall"
-        }
     }
 }

@@ -6,9 +6,17 @@ class SwipsTests: XCTestCase {
         let prog = Program()
         let builder = InstructionBuilder(program: prog)
         
+        let str1 = DataDeclaration(kind: .ascii("Factorial of ", terminated: true),
+                                   label: "fact_of")
+        builder.build(str1)
+        let str2 = DataDeclaration(kind: .ascii(" is ", terminated: true),
+                                   label: "is")
+        builder.build(str2)
+        
         builder.createBlock(name: "main", global: true, insert: true)
         builder.build(.li(.s0, 1))
         builder.build(.li(.s1, 10))
+        builder.build(.add(.s2, .s1, .zero))
         
         let loopBB = builder.createBlock(name: "loop")
         let endBB = builder.createBlock(name: "end")
@@ -21,14 +29,31 @@ class SwipsTests: XCTestCase {
         builder.build(.j(loopBB))
         
         builder.insertBlock = endBB
-        builder.build(.addi(.v0, .zero, 1))
+        
+        builder.build(.li(.v0, 4))
+        builder.build(.la(.a0, str1))
+        builder.build(.syscall)
+        
+        builder.build(.li(.v0, 1))
+        builder.build(.add(.a0, .s2, .zero))
+        builder.build(.syscall)
+        
+        builder.build(.li(.v0, 4))
+        builder.build(.la(.a0, str2))
+        builder.build(.syscall)
+        
+        builder.build(.li(.v0, 1))
         builder.build(.add(.a0, .s0, .zero))
+        builder.build(.syscall)
+        
+        builder.build(.li(.v0, 11))
+        builder.build(.li(.a0, 10))
         builder.build(.syscall)
         
         builder.build(.li(.v0, 10))
         builder.build(.syscall)
         
-        print(prog.assembly)
+        print(ProgramSerializer(program: prog).serialize())
     }
 
 

@@ -1,6 +1,7 @@
 class Program {
     let align: Int
     var blocks = [BasicBlock]()
+    var data = [DataDeclaration]()
     
     init(align: Int = 2) {
         self.align = align
@@ -10,13 +11,7 @@ class Program {
         blocks.append(basicBlock)
     }
     
-    var assembly: String {
-        let code = blocks.map {
-            $0.assembly
-            }.joined(separator: "\n")
-        return [
-            ".text",
-            ".align \(align)"
-            ].joined(separator: "\n") + "\n" + code
+    func add(_ dataDeclaration: DataDeclaration) {
+        data.append(dataDeclaration)
     }
 }

@@ -16,6 +16,10 @@ class InstructionBuilder {
         return block
     }
     
+    func build(_ dataDeclaration: DataDeclaration) {
+        program.add(dataDeclaration)
+    }
+    
     func build(_ instruction: Instruction) {
         guard let block = insertBlock else {
             fatalError("must set insert block before building")
