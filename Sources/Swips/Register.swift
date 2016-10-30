@@ -1,7 +1,12 @@
+/// Represents one of the 32 MIPS registers
 struct Register: CustomStringConvertible {
+    /// The colloquial name of the register
     let name: String
+    
+    /// The register number
     let number: Int8
     
+    /// Creates a reference to the register with a leading `$`
     var description: String {
         return "$\(name)"
     }

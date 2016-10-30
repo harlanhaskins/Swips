@@ -6,12 +6,9 @@ class SwipsTests: XCTestCase {
         let prog = Program()
         let builder = InstructionBuilder(program: prog)
         
-        let str1 = DataDeclaration(kind: .ascii("Factorial of ", terminated: true),
+        let str = DataDeclaration(kind: .ascii("! = ", terminated: true),
                                    label: "fact_of")
-        builder.build(str1)
-        let str2 = DataDeclaration(kind: .ascii(" is ", terminated: true),
-                                   label: "is")
-        builder.build(str2)
+        builder.build(str)
         
         builder.createBlock(name: "main", global: true, insert: true)
         builder.build(.li(.s0, 1))
@@ -30,16 +27,12 @@ class SwipsTests: XCTestCase {
         
         builder.insertBlock = endBB
         
-        builder.build(.li(.v0, 4))
-        builder.build(.la(.a0, str1))
-        builder.build(.syscall)
-        
         builder.build(.li(.v0, 1))
         builder.build(.add(.a0, .s2, .zero))
         builder.build(.syscall)
         
         builder.build(.li(.v0, 4))
-        builder.build(.la(.a0, str2))
+        builder.build(.la(.a0, str))
         builder.build(.syscall)
         
         builder.build(.li(.v0, 1))
