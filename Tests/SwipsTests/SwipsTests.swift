@@ -6,19 +6,18 @@ class SwipsTests: XCTestCase {
         let prog = Program()
         let builder = InstructionBuilder(program: prog)
         
-        let str = DataDeclaration(kind: .ascii("! = ", terminated: true),
-                                   label: "fact_of")
-        builder.build(str)
+        let str = builder.createData(name: "fact_msg",
+                                     kind: .ascii("! = ", terminated: true))
         
         builder.createBlock(name: "main", global: true, insert: true)
         builder.build(.li(.s0, 1))
         builder.build(.li(.s1, 10))
         builder.build(.add(.s2, .s1, .zero))
         
-        let loopBB = builder.createBlock(name: "loop")
+        let loopBB = builder.createBlock(name: "loop", insert: true)
+        
         let endBB = builder.createBlock(name: "end")
         
-        builder.insertBlock = loopBB
         builder.build(.br(.eq, .s1, .zero, endBB))
         builder.build(.mult(.s0, .s1))
         builder.build(.mflo(.s0))

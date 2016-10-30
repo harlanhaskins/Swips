@@ -1,4 +1,4 @@
-class Program {
+final class Program {
     let align: Int
     var blocks = [BasicBlock]()
     var data = [DataDeclaration]()

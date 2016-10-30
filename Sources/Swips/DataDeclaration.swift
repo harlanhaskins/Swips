@@ -1,5 +1,5 @@
 /// A data declaration in the data section of a binary.
-class DataDeclaration {
+final class DataDeclaration {
     /// The underlying declaration that describes the data declared
     let kind: DataDeclarationKind
     

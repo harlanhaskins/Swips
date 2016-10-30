@@ -1,4 +1,4 @@
-class InstructionBuilder {
+final class InstructionBuilder {
     var insertBlock: BasicBlock?
     let program: Program
     
@@ -16,8 +16,11 @@ class InstructionBuilder {
         return block
     }
     
-    func build(_ dataDeclaration: DataDeclaration) {
-        program.add(dataDeclaration)
+    @discardableResult
+    func createData(name: String, kind: DataDeclarationKind) -> DataDeclaration {
+        let data = DataDeclaration(kind: kind, label: name)
+        program.add(data)
+        return data
     }
     
     func build(_ instruction: Instruction) {
