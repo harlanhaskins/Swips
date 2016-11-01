@@ -7,7 +7,7 @@ enum Instruction {
     case lw(destination: Register, offset: Int, addr: Register)
     case lb(destination: Register, offset: Int, addr: Register)
     case li(Register, Int)
-    case la(Register, DataDeclaration)
+    case la(Register, TopLevelEntity)
     case sw(source: Register, offset: Int, addr: Register)
     case sb(source: Register, offset: Int, addr: Register)
     case rtype(String, Register, Register, Register, signed: Bool)

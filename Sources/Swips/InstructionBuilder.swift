@@ -18,7 +18,7 @@ final class InstructionBuilder {
     
     @discardableResult
     func createData(name: String, kind: DataDeclarationKind) -> DataDeclaration {
-        let data = DataDeclaration(kind: kind, label: name)
+        let data = DataDeclaration(label: name, kind: kind)
         program.add(data)
         return data
     }

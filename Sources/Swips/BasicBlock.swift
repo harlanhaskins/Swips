@@ -1,4 +1,4 @@
-final class BasicBlock {
+final class BasicBlock: TopLevelEntity {
     let label: String
     let global: Bool
     var instructions: [Instruction]
